@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#009ad6</color>
+    <color name="colorPrimaryDark">#2468a2</color>
+    <color name="colorAccent">#008792</color>
+    <color name="colorTitle">#000000</color>
+    <color name="colorSubtitle">#7C7C7C</color>
+    <color name="colorText">#000000</color>
+    <color name="colorTextButton">#494e8f</color>
+    <color name="colorButton">#D7D7D7</color>
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="colorTabRipple">#CCCCCC</color>
+    <color name="colorTopBackground">#FFFFFF</color>
+    <color name="colorTabSelectedText">#4E72B8</color>
+    <color name="colorHasRead">#EBEBEB</color>
+    <color name="colorChip">#E5E5E5</color>
+</resources>

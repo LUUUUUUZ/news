@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">COVID19NEWS</string>
+    <string name="main_navigation_username">user20200905</string>
+
+    <string name="main_navigation_menu_Home">Home</string>
+    <string name="main_navigation_menu_History">History</string>
+    <string name="main_navigation_menu_DataMap">DataMap</string>
+    <string name="main_navigation_menu_GraphSchema">GraphSchema</string>
+    <string name="main_navigation_menu_Cluster">Cluster</string>
+    <string name="main_navigation_menu_Scholar">Scholar</string>
+    <string name="main_navigation_menu_About">About</string>
+
+    <string name="loading">loading</string>
+    <string name="empty">empty</string>
+    <string name="RefreshAgain">Refresh Again</string>
+    <string name="History">History</string>
+
+    <string name="main_navigation_drawer_open">Open</string>
+    <string name="main_navigation_drawer_close">Close</string>
+
+    <string name="clearAll">clearAll</string>
+    <string name="Edit">Edit</string>
+
+    <string name="about_fragment_title">About</string>
+    <string name="about_fragment_author_front">Lu Mengying : Front End</string>
+    <string name="about_fragment_author_after">Zhu Tianyao : After End</string>
+</resources>

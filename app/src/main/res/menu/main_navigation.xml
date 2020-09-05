@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/main_navigation_group1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/main_navigation_menu_Home"
+            android:title="@string/main_navigation_menu_Home"/>
+        <item
+            android:id="@+id/main_navigation_menu_History"
+            android:title="@string/main_navigation_menu_History"/>
+        <item
+            android:id="@+id/main_navigation_menu_DataMap"
+            android:title="@string/main_navigation_menu_DataMap"/>
+        <item
+            android:id="@+id/main_navigation_menu_GraphSchema"
+            android:title="@string/main_navigation_menu_GraphSchema"/>
+    </group>
+    <group android:id="@+id/main_navigation_group2"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/main_navigation_menu_Cluster"
+            android:title="@string/main_navigation_menu_Cluster"/>
+        <item
+            android:id="@+id/main_navigation_menu_Scholar"
+            android:title="@string/main_navigation_menu_Scholar"/>
+        <item
+            android:id="@+id/main_navigation_menu_About"
+            android:title="@string/main_navigation_menu_About"/>
+
+    </group>
+
+</menu>
