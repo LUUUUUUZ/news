@@ -12,7 +12,7 @@ public class News {
     String content;
     boolean isRead;
 
-    News(JSONObject newsdata){
+    List<News>(JSONObject newsdata){
         //to do here
     }
 
