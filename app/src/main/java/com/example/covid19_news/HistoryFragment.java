@@ -47,29 +47,29 @@ public class HistoryFragment extends BasicFragment {
         a.drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         a.getSupportActionBar().setDisplayShowTitleEnabled(false);
-        //建立右上角的菜单栏，进行删除操作
-        setHasOptionsMenu(true);
+//        //建立右上角的菜单栏，进行删除操作
+//        setHasOptionsMenu(true);
 
         initData();
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.edit_news,menu);
-        //如果正在更改，就把edit放置成√对应clearall可见
-        //to do here
+//    @Override
+//    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+//        inflater.inflate(R.menu.edit_news,menu);
+//        //如果正在更改，就把edit放置成√对应clearall可见
+//        //to do here
+//
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
 
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch(item.getItemId()){
-            case R.id.clear_all:
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch(item.getItemId()){
+//            case R.id.clear_all:
+//
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     void initData(){
 

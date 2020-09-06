@@ -35,6 +35,24 @@
     <string name="category_remain">Remain</string>
     <string name="category_remain_hint">Clike to add</string>
 
+    <string name="default_news_title">It is title</string>
+    <string name="default_news_publisher">publisher here</string>
+    <string name="default_news_time">time here</string>
+    <string name="default_content">it is cotent about news</string>
 
+
+    <string name="time_error">Time Error!</string>
+    <string name="time_recent">just now</string>
+    <string name="time_minute">%d minutes ago</string>
+    <string name="time_hour">%d hours ago</string>
+    <string name="time_last_day">yesterday</string>
+    <string name="time_last_last_day">the day before yesterday</string>
+    <string name="time_day">%d days ago</string>
+    <string name="time_week">%d weeks ago</string>
+    <string name="time_month">%d months ago</string>
+    <string name="time_year">%d years ago</string>
+
+    <string name="search">search</string>
+    <string name="share">share</string>
 
 </resources>

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
+import com.google.android.material.tabs.TabLayout;
 
 import butterknife.BindView;
 
@@ -13,7 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class HomeFragment extends BasicFragment {
@@ -24,12 +31,13 @@ public class HomeFragment extends BasicFragment {
     @BindView(R.id.home_search_box)
     EditText searchbox;
     @BindView(R.id.home_tab_layout)
-    TableLayout tableLayout;
+    TabLayout tabLayout;
     @BindView(R.id.home_pager)
     ViewPager viewPager;
     @BindView(R.id.home_more_button)
     ImageButton button;
 
+    private PagerAdapter pagerAdapter;
 
     HomeFragment(int index){
         this.initIndex=index;
@@ -71,7 +79,56 @@ public class HomeFragment extends BasicFragment {
             }
         });
 
+        tabLayout.setupWithViewPager(viewPager);
+        initData();
 
 
+    }
+
+    void initData(){
+        //得到user的列表清单
+        List<String> chosen= new ArrayList<>();
+        List<String> remian= new ArrayList<>();
+        chosen.add(0,"news");
+        chosen.add(1,"paper");
+        pagerAdapter=new PagerAdapter(getChildFragmentManager(),chosen);
+        viewPager.setAdapter(pagerAdapter);
+        int index=initIndex+1;
+        if(index>=chosen.size())
+            index=chosen.size()-1;
+        if(index<0)
+            index=0;
+        tabLayout.getTabAt(index).select();
+
+    }
+
+    class PagerAdapter extends FragmentPagerAdapter{
+        List<String> tabs;
+        Fragment[] fragments;
+
+        PagerAdapter(FragmentManager fm,List<String> tabs){
+            super(fm,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+            this.tabs=tabs;
+            fragments= new Fragment[tabs.size()];
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            if(fragments[position]!=null)
+                return fragments[position];
+            return fragments[position]= new HomeTabFragment(tabs.get(position));
+        }
+
+        @Override
+        public int getCount() {
+            return tabs.size();
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return tabs.get(position);
+        }
     }
 }
