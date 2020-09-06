@@ -24,4 +24,17 @@
     <string name="about_fragment_title">About</string>
     <string name="about_fragment_author_front">Lu Mengying : Front End</string>
     <string name="about_fragment_author_after">Zhu Tianyao : After End</string>
+
+    <string name="more">More</string>
+
+    <string name="search_history">History</string>
+
+    <string name="category">Category</string>
+    <string name="category_current">Current</string>
+    <string name="category_current_hint">Clike to enter</string>
+    <string name="category_remain">Remain</string>
+    <string name="category_remain_hint">Clike to add</string>
+
+
+
 </resources>

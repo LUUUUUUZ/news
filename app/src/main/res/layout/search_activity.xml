@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/search_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:fitsSystemWindows="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="20dp"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:contentInsetStartWithNavigation="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="20dp">
+
+            <EditText
+                android:id="@+id/search_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:autofillHints="none"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:hint="Search for COVID19 NEWS"
+                android:background="@drawable/search_box_background"
+                android:textSize="14sp"
+                android:drawableStart="@drawable/ic_search"
+                android:drawablePadding="5dp"
+                android:textColorHint="@color/colorSubtitle"
+                android:textColor="@color/colorTitle"
+                android:drawableLeft="@drawable/ic_search" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="@color/colorBackground" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
