@@ -89,97 +89,48 @@ public class HomeTabFragment extends BasicFragment {
 
     private void loadMore(){
         //下刷加载更多
-        new NewsNetwork.Builder()
-                .add("size",""+Constants.PAGE_SIZE)
-                .add("categories",category)
-                .add("endDate",adapter.get(adapter.getItemCount()-1).getPublishTime().minusSeconds(1).format(Constants.TIME_FORMATTER))
-                .build()
-                .run(new NewsNetwork.Callback() {
-                    @Override
-                    public void timeout() {
-                        refreshLayout.finishLoadMore(false);
-                    }
 
-                    @Override
-                    public void error() {
-                        refreshLayout.finishLoadMore(false);
-
-                    }
-
-                    @Override
-                    public void ok(List<News> data) {
-                        if(data.isEmpty()){
-                            refreshLayout.finishLoadMoreWithNoMoreData();
-                        }else{
-                            adapter.add(data);
-                            refreshLayout.finishLoadMore();
-                        }
-
-                    }
-                });
+        //传递一个size，表示希望新给我多少条，一个目录，是news还是paper，一个enddate，表示要跟着它后面的，返回一个List<News> data;
+        //List<News> data=loadmoreNews(Constants.PAGE_SIZE,category,adapter.get(adapter.getItemCount()-1).getPublishTime().minusSeconds(1).format(Constants.TIME_FORMATTER));
+//        if(data.isEmpty()){
+//            refreshLayout.finishLoadMoreWithNoMoreData();
+//        }else{
+//            adapter.add(data);
+//            refreshLayout.finishLoadMore();
+//        }
 
     }
 
     void refresh(final boolean first){
         //上拉刷新
-        new NewsNetwork.Builder()
-                .add("size",""+Constants.PAGE_SIZE)
-                .add("categories",category)
-                .add("startDate",first ? LocalDateTime.now().minusWeeks(1).format(Constants.TIME_FORMATTER)
-                        :adapter.get(0).getPublishTime().plusSeconds(1).format(Constants.TIME_FORMATTER)
-                        )
-                .add("endDate",LocalDateTime.now().format(Constants.TIME_FORMATTER))
-                .build()
-                .run(new NewsNetwork.Callback() {
-                    @Override
-                    public void timeout() {
-                        refreshLayout.finishRefresh(false);
-                        if(first){
-                            loadingLayout.setVisibility(View.GONE);
-                            emptyLayout.setVisibility(View.VISIBLE);
-                            refreshLayout.setVisibility(View.INVISIBLE);
-                        }
-                    }
+        //参数含义：size categories startDate endData
+//        List<News> data=refreshnews(Constants.PAGE_SIZE,category,
+//                first ? LocalDateTime.now().minusWeeks(1).format(Constants.TIME_FORMATTER)
+//                        :adapter.get(0).getPublishTime().plusSeconds(1).format(Constants.TIME_FORMATTER),
+//                LocalDateTime.now().format(Constants.TIME_FORMATTER))
+//        if(first){
+//            adapter.clear();
+//            adapter.add(data);
+//            refreshLayout.finishRefresh();
+//            loadingLayout.setVisibility(View.GONE);
+//            if(data.isEmpty()){
+//                emptyLayout.setVisibility(View.VISIBLE);
+//                refreshLayout.setVisibility(View.INVISIBLE);
+//            }else{
+//                emptyLayout.setVisibility(View.INVISIBLE);
+//                refreshLayout.setVisibility(View.VISIBLE);
+//            }
+//
+//        }else{
+//            if(data.isEmpty()){
+//
+//            }else{
+//                adapter.add(data,0);
+//                newsView.scrollToPosition(0);
+//            }
+//            refreshLayout.finishRefresh();
+//        }
 
-                    @Override
-                    public void error() {
-                        refreshLayout.finishRefresh(false);
-                        if(first){
-                            loadingLayout.setVisibility(View.GONE);
-                            emptyLayout.setVisibility(View.VISIBLE);
-                            refreshLayout.setVisibility(View.INVISIBLE);
-                        }
-
-
-                    }
-
-                    @Override
-                    public void ok(List<News> data) {
-                        if(first){
-                            adapter.clear();
-                            adapter.add(data);
-                            refreshLayout.finishRefresh();
-                            loadingLayout.setVisibility(View.GONE);
-                            if(data.isEmpty()){
-                                emptyLayout.setVisibility(View.VISIBLE);
-                                refreshLayout.setVisibility(View.INVISIBLE);
-                            }else{
-                                emptyLayout.setVisibility(View.INVISIBLE);
-                                refreshLayout.setVisibility(View.VISIBLE);
-                            }
-
-                        }else{
-                            if(data.isEmpty()){
-
-                            }else{
-                                adapter.add(data,0);
-                                newsView.scrollToPosition(0);
-                            }
-                            refreshLayout.finishRefresh();
-                        }
-
-                    }
-                });
 
     }
 }

@@ -3,6 +3,7 @@ package com.example.covid19_news;
 import org.json.JSONObject;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class News {
 
@@ -12,9 +13,6 @@ public class News {
     String content;
     boolean isRead;
 
-    List<News>(JSONObject newsdata){
-        //to do here
-    }
 
     public LocalDateTime getPublishTime(){
         return publishTime;

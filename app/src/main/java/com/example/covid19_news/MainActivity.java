@@ -1,11 +1,13 @@
 package com.example.covid19_news;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
@@ -84,6 +86,25 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             return;
         }
         super.onBackPressed();
+    }
+
+    void refreshHomeFragment(int index){
+        HomeFragment f= fragmentAllocator.getHomeFragment();
+        getSupportFragmentManager().beginTransaction().remove(f).commitAllowingStateLoss();
+        fragmentAllocator.refreshIndexFragment(index);
+        if(currentFragment==f){
+            currentFragment=null;
+            navigationView.getMenu().findItem(R.id.main_navigation_menu_Home).setChecked(true);
+            switchFragment(fragmentAllocator.getHomeFragment());
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode==1 && resultCode==RESULT_OK){
+            refreshHomeFragment(data!=null? data.getIntExtra("selectPosition",-1):-1);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

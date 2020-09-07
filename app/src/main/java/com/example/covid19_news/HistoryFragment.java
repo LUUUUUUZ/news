@@ -1,10 +1,13 @@
 package com.example.covid19_news;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 
 import androidx.annotation.NonNull;
@@ -14,6 +17,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -25,9 +32,18 @@ public class HistoryFragment extends BasicFragment {
     //新闻正文部分
     @BindView(R.id.news_layout)
     RecyclerView newsView;
+    @BindView(R.id.empty_button)
+    Button emptyButton;
+    @BindView(R.id.loading_layout)
+    LinearLayout loadingLayout;
+    @BindView(R.id.empty_layout)
+    LinearLayout emptyLayout;
     //最上面的标题
     @BindView(R.id.history_toolbar)
     Toolbar toolbar;
+
+    private NewsAdapter adapter;
+    private int offset;
 
     @Override
     protected int getLayoutResource() {
@@ -72,6 +88,60 @@ public class HistoryFragment extends BasicFragment {
 //    }
 
     void initData(){
+        adapter =NewsAdapter.newAdapter(getContext(), newsView, new NewsAdapter.OnClick() {
+            @Override
+            public void click(View view, int position, News news) {
+                Intent intent = new Intent(getActivity(),NewsActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_right_enter,R.anim.slide_stay);
+
+            }
+        });
+
+        loadMore(true);
+        emptyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                emptyLayout.setVisibility(View.INVISIBLE);
+                loadingLayout.setVisibility(View.VISIBLE);
+                loadMore(true);
+            }
+        });
+        refreshLayout.resetNoMoreData();
+        refreshLayout.setEnableRefresh(false);
+        refreshLayout.setEnableLoadMoreWhenContentNotFull(false);
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                loadMore(false);
+            }
+        });
+
+
+    }
+
+    void loadMore(boolean first) {
+        if(first)
+            offset=0;
+        //得到历史记录，按照offset返回，按顺序add从offset的位置+size个返回就好
+        //List<News> data=getHistory(offset,Constants.PAGE_SIZE);
+//        if(data.isEmpty()){
+//            refreshLayout.finishLoadMoreWithNoMoreData();
+//        }else{
+//            offset+=data.size();
+//            adapter.add(data);
+//            refreshLayout.finishLoadMore();
+//        }
+//        if(first){
+//          loadingLayout.setVisibility(View.GONE);
+//          if(data.isEmpty()){
+//              emptyLayout.setVisibility(View.VISIBLE);
+//              refreshLayout.setVisibility(View.INVISIBLE);
+//          }else{
+//              emptyLayout.setVisibility(View.INVISIBLE);
+//              emptyLayout.setVisibility(View.VISIBLE);
+//          }
+//        }
 
     }
 }

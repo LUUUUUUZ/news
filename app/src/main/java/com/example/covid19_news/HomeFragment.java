@@ -1,5 +1,6 @@
 package com.example.covid19_news;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -74,7 +75,7 @@ public class HomeFragment extends BasicFragment {
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(getActivity(), CategoryActivity.class),3);
+                startActivityForResult(new Intent(getActivity(), CategoryActivity.class),1);
                 getActivity().overridePendingTransition(R.anim.slide_right_enter,R.anim.slide_stay);
             }
         });
@@ -100,6 +101,24 @@ public class HomeFragment extends BasicFragment {
             index=0;
         tabLayout.getTabAt(index).select();
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        //1:按钮增删，需要刷新主页面
+        if(requestCode==1 && resultCode== Activity.RESULT_OK){
+            if(data.getBooleanExtra("hasEdited",false)){
+                MainActivity a=(MainActivity) getActivity();
+                a.onActivityResult(requestCode,resultCode,data);
+                return;
+            }
+            int position=data.getIntExtra("selectPosision",-1);
+            if(position!=-1){
+                tabLayout.getTabAt(position+1).select();
+            }
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     class PagerAdapter extends FragmentPagerAdapter{
