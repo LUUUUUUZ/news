@@ -56,6 +56,7 @@ public class HomeFragment extends BasicFragment {
         //碎片创建后，把toolbar和主界面的菜单项连接起来：
         MainActivity a=(MainActivity) getActivity();
         a.setSupportActionBar(toolbar);
+        a.getSupportActionBar().setDisplayShowTitleEnabled(false);
         ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(
                 a,a.drawerLayout, toolbar,R.string.main_navigation_drawer_open,R.string.main_navigation_drawer_close
         );

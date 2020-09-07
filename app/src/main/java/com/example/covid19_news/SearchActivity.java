@@ -53,6 +53,12 @@ public class SearchActivity  extends BasicActivity{
         switchFragment(new SearchhomeFragment());
     }
 
+    public void searchText(String text){
+        searchbox.setText(text);
+        searchbox.setSelection(text.length());
+        goSearch();
+    }
+
     private void switchFragment(BasicFragment fragment) {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.search_layout,fragment)

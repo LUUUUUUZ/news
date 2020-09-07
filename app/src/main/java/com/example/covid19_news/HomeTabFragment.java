@@ -51,8 +51,7 @@ public class HomeTabFragment extends BasicFragment {
             public void click(View view, int position, News news) {
                 //显示新闻正文部分
                 Intent intent = new Intent(getActivity(),NewsActivity.class);
-                //放入json文件？
-                //intent.putExtra("news",
+                intent.putExtra("id",news.id);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.slide_right_enter,R.anim.slide_stay);
             }
@@ -123,6 +122,7 @@ public class HomeTabFragment extends BasicFragment {
 //
 //        }else{
 //            if(data.isEmpty()){
+//                    BasicApplication.showToast("no more data to show here");
 //
 //            }else{
 //                adapter.add(data,0);
