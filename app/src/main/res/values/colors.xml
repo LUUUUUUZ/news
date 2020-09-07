@@ -14,4 +14,9 @@
     <color name="colorTabSelectedText">#4E72B8</color>
     <color name="colorHasRead">#EBEBEB</color>
     <color name="colorChip">#E5E5E5</color>
+    <color name="orange">#FFE8A140</color>
+    <color name="blue">#2A8EE3</color>
+    <color name="transparent_gray">#90000000</color>
+
+
 </resources>

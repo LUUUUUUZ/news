@@ -2,7 +2,6 @@ package com.example.covid19_news;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
@@ -114,8 +113,10 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             switchFragment(fragmentAllocator.getHomeFragment());
         }else if(id==R.id.main_navigation_menu_History){
             switchFragment(fragmentAllocator.getHistoryFragment());
-        }else if(id==R.id.main_navigation_menu_DataMap){
-            switchFragment(fragmentAllocator.getDataMapFragment());
+        }else if(id==R.id.main_navigation_menu_ChinaDataMap){
+            switchFragment(fragmentAllocator.getChinaDataMapFragment());
+        }else if(id==R.id.main_navigation_menu_GlobalDataMap){
+            switchFragment(fragmentAllocator.getGlobalDataMapFragment());
         }else if(id==R.id.main_navigation_menu_GraphSchema){
             switchFragment(fragmentAllocator.getGraphSchemaFragment());
         }else if(id==R.id.main_navigation_menu_Cluster){
@@ -146,8 +147,12 @@ public class MainActivity extends BasicActivity implements NavigationView.OnNavi
             return new HistoryFragment();
         }
 
-        DataMapFragment getDataMapFragment(){
-            return new DataMapFragment();
+        ChinaDataMapFragment getChinaDataMapFragment(){
+            return new ChinaDataMapFragment();
+        }
+
+        GlobalDataMapFragment getGlobalDataMapFragment(){
+            return new GlobalDataMapFragment();
         }
 
         GraphSchemaFragment getGraphSchemaFragment(){
