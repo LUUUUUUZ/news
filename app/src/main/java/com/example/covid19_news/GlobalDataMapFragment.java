@@ -20,4 +20,10 @@ public class GlobalDataMapFragment extends ChinaDataMapFragment{
         super.onViewCreated(view, savedInstanceState);
         toolbar.setText("Global DataMap");
     }
+
+    void initData(){
+        //获取数据
+        //这里可以用bool表示string是国家还是城市true：是city，中国地图数据，false，世界地图数据，维护两份list就好
+        //cities= CityAdapter.getinstance().getcities(false);
+    }
 }
