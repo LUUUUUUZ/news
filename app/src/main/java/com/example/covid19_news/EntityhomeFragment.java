@@ -30,8 +30,8 @@ public class EntityhomeFragment extends BasicFragment{
             @Override
             public void click(Chip chip, int position) {
                 String text=exampleAdapter.get(position);
-                exampleAdapter.remove(position);
-                exampleAdapter.add(text,0);
+//                exampleAdapter.remove(position);
+//                exampleAdapter.add(text,0);
                 a.searchText(text);
             }
 
