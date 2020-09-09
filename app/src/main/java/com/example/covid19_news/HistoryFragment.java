@@ -43,7 +43,7 @@ public class HistoryFragment extends BasicFragment {
     Toolbar toolbar;
 
     private NewsAdapter adapter;
-    private int offset;
+
 
     @Override
     protected int getLayoutResource() {
@@ -121,27 +121,30 @@ public class HistoryFragment extends BasicFragment {
     }
 
     void loadMore(boolean first) {
-        if(first)
-            offset=0;
-        //得到历史记录，按照offset返回，按顺序add从offset的位置+size个返回就好
-        //List<News> data=getHistory(offset,Constants.PAGE_SIZE);
-//        if(data.isEmpty()){
-//            refreshLayout.finishLoadMoreWithNoMoreData();
-//        }else{
-//            offset+=data.size();
-//            adapter.add(data);
-//            refreshLayout.finishLoadMore();
-//        }
-//        if(first){
-//          loadingLayout.setVisibility(View.GONE);
-//          if(data.isEmpty()){
-//              emptyLayout.setVisibility(View.VISIBLE);
-//              refreshLayout.setVisibility(View.INVISIBLE);
-//          }else{
-//              emptyLayout.setVisibility(View.INVISIBLE);
-//              emptyLayout.setVisibility(View.VISIBLE);
-//          }
-//        }
+        List<News> data=Global.getHistory(Constants.PAGE_SIZE);
 
+        if(first){
+            adapter.clear();
+            loadingLayout.setVisibility(View.GONE);
+            if(data.isEmpty()){
+                emptyLayout.setVisibility(View.VISIBLE);
+                refreshLayout.setVisibility(View.INVISIBLE);
+            }else{
+                emptyLayout.setVisibility(View.INVISIBLE);
+                refreshLayout.setVisibility(View.VISIBLE);
+                adapter.add(data);
+                refreshLayout.finishLoadMore();
+            }
+
+        }
+        else{
+            if(data.isEmpty()){
+                refreshLayout.finishLoadMoreWithNoMoreData();
+            }else{
+                adapter.add(data);
+                refreshLayout.finishLoadMore();
+            }
+
+        }
     }
 }

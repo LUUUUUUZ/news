@@ -53,7 +53,7 @@ public class NewsActivity extends BasicActivity {
 
     private void initData(){
         try{
-            news=new News(getIntent().getExtras().getString("id"));
+            news=Global.getNewsById(getIntent().getExtras().getString("id"));
 
             getSupportActionBar().setTitle(news.publisher);
 

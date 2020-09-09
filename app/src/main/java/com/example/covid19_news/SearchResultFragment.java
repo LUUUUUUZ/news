@@ -14,6 +14,8 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 
+import java.util.List;
+
 import butterknife.BindView;
 
 public class SearchResultFragment extends BasicFragment {
@@ -61,29 +63,30 @@ public class SearchResultFragment extends BasicFragment {
 //                first ? LocalDateTime.now().minusWeeks(1).format(Constants.TIME_FORMATTER)
 //                        :adapter.get(0).getPublishTime().plusSeconds(1).format(Constants.TIME_FORMATTER),
 //                LocalDateTime.now().format(Constants.TIME_FORMATTER))
-//        if(first){
-//            adapter.clear();
-//            adapter.add(data);
-//            refreshLayout.finishRefresh();
-//            loadingLayout.setVisibility(View.GONE);
-//            if(data.isEmpty()){
-//                emptyLayout.setVisibility(View.VISIBLE);
-//                refreshLayout.setVisibility(View.INVISIBLE);
-//            }else{
-//                emptyLayout.setVisibility(View.INVISIBLE);
-//                refreshLayout.setVisibility(View.VISIBLE);
-//            }
-//
-//        }else{
-//            if(data.isEmpty()){
-//                    BasicApplication.showToast("no more data to show here");
-//
-//            }else{
-//                adapter.add(data,0);
-//                newsView.scrollToPosition(0);
-//            }
-//            refreshLayout.finishRefresh();
-//        }
+        List<News> data=Global.getSearchResult(text,Constants.PAGE_SIZE);
+        if(first){
+            adapter.clear();
+            adapter.add(data);
+            refreshLayout.finishRefresh();
+            loadingLayout.setVisibility(View.GONE);
+            if(data.isEmpty()){
+                emptyLayout.setVisibility(View.VISIBLE);
+                refreshLayout.setVisibility(View.INVISIBLE);
+            }else{
+                emptyLayout.setVisibility(View.INVISIBLE);
+                refreshLayout.setVisibility(View.VISIBLE);
+            }
+
+        }else{
+            if(data.isEmpty()){
+                    BasicApplication.showToast("no more data to show here");
+
+            }else{
+                adapter.add(data,0);
+                newsView.scrollToPosition(0);
+            }
+            refreshLayout.finishRefresh();
+        }
 
     }
 
@@ -92,12 +95,13 @@ public class SearchResultFragment extends BasicFragment {
 
         //传递一个size，表示希望新给我多少条，一个目录，是news还是paper，一个enddate，表示要跟着它后面的，返回一个List<News> data;
         //List<News> data=loadmoreNews(Constants.PAGE_SIZE,category,adapter.get(adapter.getItemCount()-1).getPublishTime().minusSeconds(1).format(Constants.TIME_FORMATTER));
-//        if(data.isEmpty()){
-//            refreshLayout.finishLoadMoreWithNoMoreData();
-//        }else{
-//            adapter.add(data);
-//            refreshLayout.finishLoadMore();
-//        }
+        List<News> data=Global.getMoreSearchResult(Constants.PAGE_SIZE);
+        if(data.isEmpty()){
+            refreshLayout.finishLoadMoreWithNoMoreData();
+        }else{
+            adapter.add(data);
+            refreshLayout.finishLoadMore();
+        }
     }
 
     private void initData(){
@@ -119,7 +123,9 @@ public class SearchResultFragment extends BasicFragment {
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                refresh(false);
+
+                //refresh(false);
+                //不支持
             }
         });
 

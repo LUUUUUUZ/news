@@ -61,76 +61,81 @@ public class HomeTabFragment extends BasicFragment {
     }
 
     void initData() {
-        refresh(true);
+        loadMore(true);
         emptyButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 emptyLayout.setVisibility(View.INVISIBLE);
                 loadingLayout.setVisibility(View.VISIBLE);
-                refresh(true);
+                refresh();
             }
         });
 
         refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                loadMore();
+                loadMore(false);
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                refresh(false);
+                refresh();
 
             }
         });
 
     }
 
-    private void loadMore(){
+    private void loadMore(boolean first){
+        List<News> data=Global.getForwardList(Constants.PAGE_SIZE,category);
+
+
+        if(first){
+            adapter.clear();
+            adapter.add(data);
+            refreshLayout.finishLoadMore();
+            loadingLayout.setVisibility(View.GONE);
+            if(data.isEmpty()){
+                emptyLayout.setVisibility(View.VISIBLE);
+                refreshLayout.setVisibility(View.INVISIBLE);
+            }else{
+                emptyLayout.setVisibility(View.INVISIBLE);
+                refreshLayout.setVisibility(View.VISIBLE);
+            }
+
+        }else{
+            if(data.isEmpty()){
+               refreshLayout.finishLoadMoreWithNoMoreData();
+            }else{
+                adapter.add(data);
+                refreshLayout.finishLoadMore();
+
+            }
+        }
         //下刷加载更多
 
         //传递一个size，表示希望新给我多少条，一个目录，是news还是paper，一个enddate，表示要跟着它后面的，返回一个List<News> data;
-        //List<News> data=loadmoreNews(Constants.PAGE_SIZE,category,adapter.get(adapter.getItemCount()-1).getPublishTime().minusSeconds(1).format(Constants.TIME_FORMATTER));
-//        if(data.isEmpty()){
-//            refreshLayout.finishLoadMoreWithNoMoreData();
-//        }else{
-//            adapter.add(data);
-//            refreshLayout.finishLoadMore();
-//        }
+//        System.out.println("!!!!"+data.size());
+
 
     }
 
-    void refresh(final boolean first){
+    void refresh(){
         //上拉刷新
         //参数含义：size categories startDate endData
 //        List<News> data=refreshnews(Constants.PAGE_SIZE,category,
 //                first ? LocalDateTime.now().minusWeeks(1).format(Constants.TIME_FORMATTER)
 //                        :adapter.get(0).getPublishTime().plusSeconds(1).format(Constants.TIME_FORMATTER),
 //                LocalDateTime.now().format(Constants.TIME_FORMATTER))
-//        if(first){
-//            adapter.clear();
-//            adapter.add(data);
-//            refreshLayout.finishRefresh();
-//            loadingLayout.setVisibility(View.GONE);
-//            if(data.isEmpty()){
-//                emptyLayout.setVisibility(View.VISIBLE);
-//                refreshLayout.setVisibility(View.INVISIBLE);
-//            }else{
-//                emptyLayout.setVisibility(View.INVISIBLE);
-//                refreshLayout.setVisibility(View.VISIBLE);
-//            }
-//
-//        }else{
-//            if(data.isEmpty()){
-//                    BasicApplication.showToast("no more data to show here");
-//
-//            }else{
-//                adapter.add(data,0);
-//                newsView.scrollToPosition(0);
-//            }
-//            refreshLayout.finishRefresh();
-//        }
+        List<News> data=Global.getUpdateList(Constants.PAGE_SIZE,category);
+        if(data.isEmpty()){
+            BasicApplication.showToast("no more data to show here");
 
-
+        }else{
+//            System.out.println("????"+data.size());
+            adapter.add(data,0);
+            newsView.scrollToPosition(0);
+        }
+        refreshLayout.finishRefresh();
     }
 }

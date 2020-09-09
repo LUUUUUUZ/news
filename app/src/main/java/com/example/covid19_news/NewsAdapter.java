@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,6 +29,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     private OnClick onclick;
 
     private NewsAdapter(Context context, OnClick onclick ){
+        data=new ArrayList<News>();
         this.onclick=onclick;
         this.context=context.getApplicationContext();
     }
@@ -66,6 +68,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         notifyItemRangeInserted(position,data.size());
     }
     void add(List<News> data){
+        System.out.println("data.size() for now:"+data.size());
         add(data,this.data.size());
     }
     @NonNull
@@ -79,7 +82,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //根据position找到new设置view
+        News d=get(position);
+        holder.title.setText(d.title);
+        holder.publisher.setText(d.publisher);
+        holder.publishTime.setText(Util.parseTime(d.publishTime));
+        holder.setOnclick(onclick,d);
 
+        if(d.isRead){
+            updateHasRead(holder.itemView);
+        }
         //如果新闻isread
         //updateHasRead(holder.itemView);
 
@@ -88,8 +99,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        //return data.size();
-        return 0;
+        return data.size();
+//        return 0;
     }
 
 
@@ -105,6 +116,18 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         ViewHolder(View itemView){
             super(itemView);
             ButterKnife.bind(this,itemView);
+        }
+
+        void setOnclick(final OnClick onClick,final News news){
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Global.addHistory(news);
+                    onClick.click(v,getAdapterPosition(),news);
+                    news.isRead=true;
+                    updateHasRead(v);
+                }
+            });
         }
 
         //这里点击新闻之后需要在user层面做一系列的事情
