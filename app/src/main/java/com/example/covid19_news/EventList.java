@@ -34,11 +34,11 @@ public class EventList {
         new Thread(new Runnable() {
             @Override
             public synchronized void run() {
-                for(int ind=0;ind<10;ind++) {
-                    StringBuilder u = new StringBuilder(Global.eventListUrl);
+                for(int ind=0;ind<Global.ListMax/20;ind++) {
+                    StringBuilder u = new StringBuilder(Global.EventListUrl);
                     //https://covid-dashboard.aminer.cn/api/events/list?type=paper&page=1&size=5
                     u.append("list?type=");
-                    u.append(Global.everyTypes.get(type));
+                    u.append(Global.EveryTypes.get(type));
                     u.append("&page=" + read[type] + 1);
                     u.append("&size=20");
                     try {
@@ -55,8 +55,14 @@ public class EventList {
                         JSONObject jobj = new JSONObject(br.readLine());
                         JSONArray jarry = new JSONArray(jobj.getString("data"));
                         for (int i = 0; i < jarry.length(); i++) {
-                            Global.db.insertNews(jarry.getJSONObject(i));
-                            getForward.addLast(jarry.getJSONObject(i).getString("_id"));
+                            String tmp=jarry.getJSONObject(i).getString("_id");
+                            boolean k=Global.db.findNews(tmp);
+                            if(!k) {
+                                Global.db.insertNews(jarry.getJSONObject(i));
+                            }
+                            if(!getForward.contains(tmp)){
+                                getForward.addLast(tmp);
+                            }
                         }
                         if(lastNews==null){
                             lastNews=jarry.getJSONObject(0).getString("_id");
@@ -78,10 +84,10 @@ public class EventList {
                     try {
                         wait(60*1000);
                         for (int updateOn = 1; updateOn != 0; updateOn++) {
-                            StringBuilder u = new StringBuilder(Global.eventListUrl);
+                            StringBuilder u = new StringBuilder(Global.EventListUrl);
                             //https://covid-dashboard.aminer.cn/api/events/list?type=paper&page=1&size=5
                             u.append("list?type=");
-                            u.append(Global.everyTypes.get(type));
+                            u.append(Global.EveryTypes.get(type));
                             u.append("&page=" + updateOn);
                             u.append("&size=20");
 

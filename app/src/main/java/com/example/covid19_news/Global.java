@@ -1,8 +1,6 @@
 package com.example.covid19_news;
 
 import android.content.Context;
-import android.os.Handler;
-import android.view.ViewStructure;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,10 +19,12 @@ public class Global {
     static String TYPE="type";
     static String ENTITY="entity";
     static MyDataBase db;
-    static String eventUrl="https://covid-dashboard.aminer.cn/api/event/";
-    static String eventListUrl="https://covid-dashboard.aminer.cn/api/events/";
-    static String entityQueueUrl="https://innovaapi.aminer.cn/covid/api/v1/pneumonia/entityquery?entity=";
-    static HashMap<Integer,String> everyTypes;
+    static String EventUrl="https://covid-dashboard.aminer.cn/api/event/";
+    static String EventListUrl="https://covid-dashboard.aminer.cn/api/events/";
+    static String EntityQueueUrl="https://innovaapi.aminer.cn/covid/api/v1/pneumonia/entityquery?entity=";
+    static HashMap<Integer,String> EveryTypes;
+    static LinkedList<String> ChosenTypes;
+    static LinkedList<String> RemainTypes;
     static final int allType=0;
     static final int eventType=1;
     static final int pointsType=2;
@@ -33,31 +33,50 @@ public class Global {
     static final int ListMax=200;
     static int LoadedHistory;
     static LinkedList<String> History;
+    static LinkedList<String> SearchHistory;
     static LinkedList<String> ForwardNews;
     static LinkedList<String> ForwardPaper;
     static LinkedList<String> UpdateNews;
     static LinkedList<String> UpdatePaper;
     static LinkedList<String> SearchResult;
-    static HashMap<String,News> allNews;
+    static LinkedList<String> RecommendEntity;
+    static HashMap<String,News> AllNews;
+    //static LinkedList<Location> ChinaLocation;
+    //static LinkedList<Location> WorldLocation;
 
     static public void init(Context context){
         System.out.println("Start initializing...");
         db=new MyDataBase(context);
-        allNews=new HashMap<>();
+        AllNews=new HashMap<>();
         ForwardNews=new LinkedList<>();
         ForwardPaper=new LinkedList<>();
         UpdateNews=new LinkedList<>();
         UpdatePaper=new LinkedList<>();
-        History=db.getHistory();
         SearchResult=new LinkedList<>();
-        everyTypes=new HashMap<>();{
-            everyTypes.put(allType, "all");
-            everyTypes.put(eventType, "event");
-            everyTypes.put(pointsType, "points");
-            everyTypes.put(newsType, "news");
-            everyTypes.put(paperType, "paper");
-        }
+        EveryTypes=new HashMap<Integer, String>(){{
+            put(allType, "all");
+            put(eventType, "event");
+            put(pointsType, "points");
+            put(newsType, "news");
+            put(paperType, "paper");
+        }};
+        ChosenTypes=new LinkedList<String>(){{
+            add("paper");
+            add("news");
+        }};
+        RemainTypes=new LinkedList<>();
         LoadedHistory=0;
+        History=db.getHistory();
+        SearchHistory=new LinkedList<>();
+        RecommendEntity=new LinkedList<String>(){{
+            add("covid-19");
+            add("疫情");
+            add("疫苗");
+            add("病毒");
+            add("新型冠状病毒");
+        }};
+        EntitySearcher.init();
+        //Location.init();
         EventList downloadNews=new EventList(newsType);
         downloadNews.makeList();
         downloadNews.makeUpdate();
@@ -67,16 +86,16 @@ public class Global {
     }
 
     static public News getNewsById(String id){
-        if(!allNews.containsKey(id)){
+        if(!AllNews.containsKey(id)){
             News tmp=new News(id);
-            allNews.put(id,tmp);
+            AllNews.put(id,tmp);
         }
-        return allNews.get(id);
+        return AllNews.get(id);
     }
 
     static public List<News> getForwardList(int size, String type){
         LinkedList<String>from=Global.ForwardNews;
-        if(type.equals(Global.everyTypes.get(Global.paperType))) {
+        if(type.equals(Global.EveryTypes.get(Global.paperType))) {
             from = Global.ForwardPaper;
         }
         ArrayList<News> res=new ArrayList<>();
@@ -90,7 +109,7 @@ public class Global {
 
     static public List<News> getUpdateList(int size,String type){
         LinkedList<String>from=Global.UpdateNews;
-        if(type.equals(Global.everyTypes.get(Global.paperType))) {
+        if(type.equals(Global.EveryTypes.get(Global.paperType))) {
             from = Global.UpdatePaper;
         }
         ArrayList<News> res=new ArrayList<>();
@@ -103,7 +122,9 @@ public class Global {
     }
 
     static public List<News> getSearchResult(String keyword,int size){
+        SearchResult.clear();
         db.searchFor(keyword.trim());
+        SearchHistory.addLast(keyword.trim());
         List<News> res=new ArrayList<>();
         for(int i=0;i<size;i++){
             res.add(getNewsById(SearchResult.getFirst()));
@@ -111,7 +132,6 @@ public class Global {
         }
         return res;
     }
-
     //Same keyword as lastSearch
     static public List<News> getMoreSearchResult(int size){
         List<News> res=new ArrayList<>();
@@ -122,6 +142,10 @@ public class Global {
         return res;
     }
 
+    static public List<String> getSearchHistory(){
+        return SearchHistory;
+    }
+
     static public void addHistory(News n){
         db.insertHistory(n);
         History.addLast(n.id);
@@ -129,12 +153,9 @@ public class Global {
     }
 
     static public List<News> getHistory(int size){
-        if(History==null){
-            History=db.getHistory();
-        }
         List<News> res=new ArrayList<>();
         for(int i=LoadedHistory;i<LoadedHistory+size&&i<History.size();i++){
-            res.add(getNewsById(History.getLast()));
+            res.add(getNewsById(History.get(History.size()-1-i)));
             LoadedHistory++;
         }
         Collections.reverse(res);
@@ -144,5 +165,38 @@ public class Global {
     static public void clean(Context context){
         Global.db=new MyDataBase(context);
         db.clean();
+    }
+
+    static public Entity searchForEntity(String name){
+        EntitySearcher.searchFor(name.trim());
+        while (!EntitySearcher.searchFinished){}
+        return EntitySearcher.searchResult;
+    }
+
+    static List<String> getRecommendEntity(){
+        return RecommendEntity;
+    }
+
+    static public List<String> getChosenTypes() {
+        return ChosenTypes;
+    }
+    static public List<String> getRemainTypes(){
+        return RemainTypes;
+    }
+    static public void updateTypes(List<String> chosen){
+        ChosenTypes.clear();
+        RemainTypes.clear();
+        if(chosen.contains("news")){
+            ChosenTypes.add("news");
+        }
+        else {
+            RemainTypes.add("news");
+        }
+        if(chosen.contains("paper")){
+            ChosenTypes.add("paper");
+        }
+        else {
+            RemainTypes.add("paper");
+        }
     }
 }

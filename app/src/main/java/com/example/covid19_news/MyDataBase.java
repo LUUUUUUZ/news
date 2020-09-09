@@ -13,7 +13,6 @@ import java.util.LinkedList;
 
 public class MyDataBase extends SQLiteOpenHelper{
     final static String DataBaseName="NewsDataBase";
-    Cursor cursor;
 
     public MyDataBase(Context context) {
         super(context, DataBaseName, null, 1);
@@ -37,13 +36,10 @@ public class MyDataBase extends SQLiteOpenHelper{
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
 
-    public synchronized long insertNews(JSONObject jobj) {
+    public synchronized void insertNews(JSONObject jobj) {
         SQLiteDatabase db = this.getWritableDatabase();
         try {
-            if(findNews(jobj.getString("_id"))){
-                return 0;
-            }
-            else{
+            if(!findNews(jobj.getString("_id"))){
                 ContentValues cv = new ContentValues();
                 cv.put(Global.ID, jobj.getString("_id"));
                 cv.put(Global.TITLE, jobj.getString("title"));
@@ -53,17 +49,25 @@ public class MyDataBase extends SQLiteOpenHelper{
                 cv.put(Global.TYPE,jobj.getString("type"));
                 //cv.put(Global.LOADED,true);
                 System.out.println("inserting news "+jobj.getString("_id"));
-                long row = db.insert(Global.NewsTableName, null, cv);
-                return row;
+                db.insert(Global.NewsTableName, null, cv);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return 0;
     }
     public JSONObject queryNews(String id) {
         JSONObject jobj = new JSONObject();
+        SQLiteDatabase db=getReadableDatabase();
         if(findNews(id)){
+            Cursor cursor = db.query(Global.NewsTableName, null, null, null, null, null, null);
+            boolean h=false;
+            for(cursor.moveToFirst();!cursor.isAfterLast();cursor.moveToNext()) {
+                String k=cursor.getString(0);
+                if(k.equals(id)) {
+                    h=true;
+                    break;
+                }
+            }
             try {
                 jobj.put(Global.ID,cursor.getString(0));
                 jobj.put(Global.TITLE,cursor.getString(1));
@@ -73,12 +77,15 @@ public class MyDataBase extends SQLiteOpenHelper{
             }catch (JSONException e) {
                 e.printStackTrace();
             }
+            cursor.close();
         }
         return jobj;
     }
+
+
     public boolean findNews(String id){
         SQLiteDatabase db = this.getReadableDatabase();
-        cursor = db.query(Global.NewsTableName, null, null, null, null, null, null);
+        Cursor cursor = db.query(Global.NewsTableName, null, null, null, null, null, null);
         boolean h=false;
         for(cursor.moveToFirst();!cursor.isAfterLast();cursor.moveToNext()) {
             String k=cursor.getString(0);
@@ -99,19 +106,19 @@ public class MyDataBase extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-    public long insertHistory(News n){
+    public void insertHistory(News n){
         SQLiteDatabase db=this.getWritableDatabase();
         Cursor c=db.query(Global.HistoryTableName,null,null,null,null,null,null);
         for(c.moveToFirst();!c.isAfterLast();c.moveToNext()){
             if(c.getString(0).equals(n.id)){
-                return 0;
+                return;
             }
         }
         ContentValues cv = new ContentValues();
         cv.put(Global.ID, n.id);
-        long row = db.insert(Global.HistoryTableName, null, cv);
+        db.insert(Global.HistoryTableName, null, cv);
         System.out.println("inserting history "+n.id);
-        return row;
+        c.close();
     }
 
     public LinkedList<String> getHistory(){
@@ -121,17 +128,19 @@ public class MyDataBase extends SQLiteOpenHelper{
         for(c.moveToLast();!c.isBeforeFirst();c.moveToPrevious()){
             his.addLast(c.getString(0));
         }
+        c.close();
         return his;
     }
 
     public void searchFor(final String keyword){
         SQLiteDatabase db=this.getReadableDatabase();
-        Cursor cursor=db.query(Global.NewsTableName,null,null,null,null,null,null);
-        for(cursor.moveToFirst();(!cursor.isAfterLast());cursor.moveToNext()){
-            String k=cursor.getString(1);
+        Cursor c=db.query(Global.NewsTableName,null,null,null,null,null,null);
+        for(c.moveToFirst();(!c.isAfterLast());c.moveToNext()){
+            String k=c.getString(1);
             if(k.contains(keyword)){
-                Global.SearchResult.addLast(cursor.getString(0));
+                Global.SearchResult.addLast(c.getString(0));
             }
         }
+        c.close();
     }
 }

@@ -61,11 +61,11 @@ public class EntityResultFragment extends BasicFragment {
     }
 
     void initData(){
-       // entity=get_entity(text);
+       entity=Global.searchForEntity(text);
     }
 
     void initView() {
-        if (!entity.exist) {
+        if (entity.isEmpty) {
             empty_layout.setVisibility(View.VISIBLE);
             entity_hasresult.setVisibility(View.INVISIBLE);
         } else {
@@ -97,12 +97,12 @@ public class EntityResultFragment extends BasicFragment {
                 }
             }
 
-            List<Relations> rela=entity.relations;
+            List<Relation> rela=entity.relations;
             if(rela==null){
                 relations_layout.setVisibility(View.INVISIBLE);
             }
             else{
-                for(Relations r : rela){
+                for(Relation r : rela){
                     TableRow tableRow = new TableRow(getContext());
                     TextView textView1=new TextView(getContext());
                     Button button=new Button(getContext());
@@ -110,7 +110,7 @@ public class EntityResultFragment extends BasicFragment {
 
                     textView1.setText(r.relation);
 
-                    button.setText(r.name);
+                    button.setText(r.lable);
 
                     if(r.forward){
                         image.setImageResource(R.drawable.ic_forward);
@@ -122,7 +122,7 @@ public class EntityResultFragment extends BasicFragment {
                         @Override
                         public void onClick(View v) {
                             final EntityActivity a= (EntityActivity) getActivity();
-                            a.searchText(r.name);
+                            a.searchText(r.lable);
                         }
                     });
                     tableRow.addView(textView1);

@@ -89,10 +89,11 @@ public class HomeFragment extends BasicFragment {
 
     void initData(){
         //得到user的列表清单
-        List<String> chosen= new ArrayList<>();
-        List<String> remian= new ArrayList<>();
-        chosen.add(0,"news");
-        chosen.add(1,"paper");
+//        List<String> chosen= new ArrayList<>();
+//        List<String> remian= new ArrayList<>();
+//        chosen.add(0,"news");
+//        chosen.add(1,"paper");
+        List<String> chosen=Global.getChosenTypes();
         pagerAdapter=new PagerAdapter(getChildFragmentManager(),chosen);
         viewPager.setAdapter(pagerAdapter);
         int index=initIndex+1;

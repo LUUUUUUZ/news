@@ -43,7 +43,7 @@ public class SearchhomeFragment extends BasicFragment{
     }
     void initData(){
 //        //从接口得到用户现在的搜索历史
-//        List<String> data=getSearchHistory();
-//        historyAdapter.add(data);
+        List<String> data=Global.getSearchHistory();
+        historyAdapter.add(data);
     }
 }

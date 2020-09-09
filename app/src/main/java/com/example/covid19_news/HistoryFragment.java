@@ -132,7 +132,7 @@ public class HistoryFragment extends BasicFragment {
             }else{
                 emptyLayout.setVisibility(View.INVISIBLE);
                 refreshLayout.setVisibility(View.VISIBLE);
-                adapter.add(data);
+                adapter.add(data,0);
                 refreshLayout.finishLoadMore();
             }
 
@@ -141,7 +141,7 @@ public class HistoryFragment extends BasicFragment {
             if(data.isEmpty()){
                 refreshLayout.finishLoadMoreWithNoMoreData();
             }else{
-                adapter.add(data);
+                adapter.add(data,0);
                 refreshLayout.finishLoadMore();
             }
 

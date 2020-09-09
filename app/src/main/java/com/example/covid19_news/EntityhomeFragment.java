@@ -45,6 +45,7 @@ public class EntityhomeFragment extends BasicFragment{
     void initData(){
 //        //从接口得到推荐的实体，构造几个就行？随便啦
 //        List<String> data= new ArrayList<>();
-
+        List<String> data=Global.getRecommendEntity();
+        exampleAdapter.add(data);
     }
 }

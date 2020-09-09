@@ -52,7 +52,7 @@ public class CategoryActivity extends SwipeActivity{
                 remainAdapter.remove(position);
                 hasEdited=true;
                 //更新用户记录的列表项
-                // to do here
+                Global.updateTypes(currentAdapter.getData());
             }
 
             @Override
@@ -71,6 +71,7 @@ public class CategoryActivity extends SwipeActivity{
             @Override
             public void close(Chip chip, int position) {
                 remainAdapter.add(currentAdapter.get(position));
+//                Global.cancelType(currentAdapter.get(position));
                 currentAdapter.remove(position);
 
             }
@@ -150,6 +151,7 @@ public class CategoryActivity extends SwipeActivity{
                     hasEdited=true;
                     //更新用户列表
                     //to do here
+                    Global.updateTypes(currentAdapter.getData());
                 }
             }
         });
@@ -176,15 +178,9 @@ public class CategoryActivity extends SwipeActivity{
     void initData(){
         //从用户那里get现在选择的，和剩下的
         //test below:
-        List<String> chosen=new ArrayList<>();
-        chosen.add("news");
-        chosen.add("paper");
-
-        List<String> remain=new ArrayList<>();
-        remain.add("points");
-        remain.add("all");
-        remain.add("events");
-
-
+        List<String> chosen=Global.getChosenTypes();
+        currentAdapter.add(chosen);
+        List<String> remain=Global.getRemainTypes();
+        remainAdapter.add(remain);
     }
 }
