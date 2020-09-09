@@ -4,8 +4,7 @@
 
     <string name="main_navigation_menu_Home">Home</string>
     <string name="main_navigation_menu_History">History</string>
-    <string name="main_navigation_menu_ChinaDataMap">ChinaDataMap</string>
-    <string name="main_navigation_menu_GlobalDataMap">GlobalDataMap</string>
+    <string name="main_navigation_menu_DataMap">DataMap</string>
     <string name="main_navigation_menu_GraphSchema">GraphSchema</string>
     <string name="main_navigation_menu_Cluster">Cluster</string>
     <string name="main_navigation_menu_Scholar">Scholar</string>

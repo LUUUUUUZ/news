@@ -3,6 +3,7 @@ package com.example.covid19_news;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.widget.ListView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -131,15 +132,15 @@ public class LineChartManager {
     /**
      * 展示一条曲线 默认x轴
      *
-     * @param cities    所有数据，默认第一条展示
+     * @param location    所有数据，默认第一条展示
      * @param name 曲线名称
      * @param color    曲线颜色
      */
-    public void showLineChart(List<City> cities,String name,int color){
+    public void showLineChart(Location location,String name,int color){
         List<Entry> entries=new ArrayList<>();
-        for(int i=0;i<cities.size();i++){
-            City city=cities.get(i);
-            Entry entry= new Entry(i,(float) city.confirmed);
+        List<Everyday> data=location.data;
+        for(int i=0;i<data.size();i++){
+            Entry entry= new Entry(i,(float) data.get(i).confirmed);
             entries.add(entry);
         }
         xAxis.setLabelCount(10, false);
@@ -149,8 +150,7 @@ public class LineChartManager {
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                City city=cities.get((int) value);
-                return city.name;
+                return data.get((int) value).data;
             }
         });
 
@@ -188,12 +188,12 @@ public class LineChartManager {
     /**
      * 添加曲线
      */
-    public void addLine(List<City> cities, String name, int color) {
+    public void addLine(Location location, String name, int color) {
         List<Entry> entries = new ArrayList<>();
-        for (int i = 0; i < cities.size(); i++) {
-            City city = cities.get(i);
+        List<Everyday> data=location.data;
+        for (int i = 0; i < data.size(); i++) {
             Entry entry;
-            entry = new Entry(i, (float) city.cured);
+            entry = new Entry(i, (float) data.get(i).cured);
             entries.add(entry);
         }
         // 每一个LineDataSet代表一条线
@@ -206,7 +206,7 @@ public class LineChartManager {
     /**
      * 重置某条曲线 position 从 0 开始
      */
-    public void resetLine(int position, List<City> cities, String name, int color,int index) {
+    public void resetLine(int position, Location location, String name, int color,int index) {
         LineData lineData = lineChart.getData();
         List<ILineDataSet> list = lineData.getDataSets();
         if (list.size() <= position) {
@@ -214,14 +214,14 @@ public class LineChartManager {
         }
 
         List<Entry> entries = new ArrayList<>();
-        for (int i = 0; i < cities.size(); i++) {
-            City data = cities.get(i);
+        List<Everyday> data=location.data;
+        for (int i = 0; i < data.size(); i++) {
             Entry entry;
             if(index==1){
-                entry=new Entry(i, (float) data.cured);
+                entry=new Entry(i, (float) data.get(i).cured);
             }
             else {
-                entry=new Entry(i, (float) data.dead);
+                entry=new Entry(i, (float) data.get(i).dead);
             }
             entries.add(entry);
         }

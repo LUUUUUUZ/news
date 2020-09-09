@@ -5,18 +5,26 @@ import android.graphics.Bitmap;
 import java.util.List;
 import java.util.Map;
 
+class Relations{
+    String relation;
+    String name;
+    boolean forward;
+
+}
+
 public class Entity {
     //我没有写get函数，所以不管其他，不要设置成私有的了，我就直接用·的方式访问这些成员变量了
     //实体
     String name;
     //应该是enwiki baidu zhiwiki其中一个用来基本描述的
     String description;
+    boolean exist;
     //属性
     Map<String,String> properties;
-    //关系，不显示图的话，应该不需要forward这些
-    Map<String,String> relations;
+    List<Relations> relations;
     //根据url得到的图片，可能为空
     Bitmap image;
+
 
 
 

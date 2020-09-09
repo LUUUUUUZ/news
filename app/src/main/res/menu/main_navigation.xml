@@ -9,11 +9,8 @@
             android:id="@+id/main_navigation_menu_History"
             android:title="@string/main_navigation_menu_History"/>
         <item
-            android:id="@+id/main_navigation_menu_ChinaDataMap"
-            android:title="@string/main_navigation_menu_ChinaDataMap"/>
-        <item
-            android:id="@+id/main_navigation_menu_GlobalDataMap"
-            android:title="@string/main_navigation_menu_GlobalDataMap"/>
+            android:id="@+id/main_navigation_menu_DataMap"
+            android:title="@string/main_navigation_menu_DataMap"/>
         <item
             android:id="@+id/main_navigation_menu_GraphSchema"
             android:title="@string/main_navigation_menu_GraphSchema"/>
