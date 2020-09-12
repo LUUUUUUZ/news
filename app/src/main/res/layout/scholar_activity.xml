@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/scholar_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/scholar_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="20dp"
+            android:fitsSystemWindows="true"
+            app:contentInsetStartWithNavigation="0dp"
+            app:layout_scrollFlags="scroll|snap|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Scholar"
+                android:textSize="30dp"
+                android:textColor="@color/colorBackground"
+                android:gravity="center_horizontal">
+            </TextView>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:orientation="horizontal"
+            android:background="#FFFFFF">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/scholar_tab_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:tabBackground="@color/colorBackground"
+                app:tabIndicatorColor="@color/colorPrimary"
+                app:tabIndicatorHeight="2dp"
+                app:tabMode="scrollable"
+                app:tabRippleColor="#CCCCCC"
+                app:tabSelectedTextColor="@color/colorPrimaryDark"
+                app:tabTextColor="@color/colorSubtitle"/>
+
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/scholar_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+

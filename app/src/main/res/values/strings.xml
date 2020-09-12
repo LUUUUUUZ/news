@@ -23,7 +23,7 @@
 
     <string name="about_fragment_title">About</string>
     <string name="about_fragment_author_front">Lu Mengying : Front End</string>
-    <string name="about_fragment_author_after">Zhu Tianyao : After End</string>
+    <string name="about_fragment_author_after">Zhu Tianyao : Back End</string>
 
     <string name="more">More</string>
 
@@ -54,5 +54,6 @@
 
     <string name="search">search</string>
     <string name="share">share</string>
+    <string name="cluster">Cluster</string>
 
 </resources>

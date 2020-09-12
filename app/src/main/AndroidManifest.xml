@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.covid19_news">
+    package="com.java.zhutianyao">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".BasicApplication"
+        android:name="com.java.zhutianyao.BasicApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -15,32 +15,34 @@
         android:supportsRtl="true"
         android:theme="@style/DayTheme">
 
-        <activity android:name=".Welcome">
+        <activity android:name="com.java.zhutianyao.Welcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
+        <activity android:name="com.java.zhutianyao.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
-        <activity android:name=".SearchActivity"
+        <activity android:name="com.java.zhutianyao.SearchActivity"
             android:windowSoftInputMode="adjustResize|stateVisible">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
                 <category android:name="android.intent.action.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".EntityActivity"
+        <activity android:name="com.java.zhutianyao.EntityActivity"
             android:windowSoftInputMode="adjustResize|stateVisible">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
                 <category android:name="android.intent.action.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".DataMapActivity"/>
-        <activity android:name=".CategoryActivity"/>
-        <activity android:name=".NewsActivity"/>
+        <activity android:name="com.java.zhutianyao.DataMapActivity"/>
+        <activity android:name="com.java.zhutianyao.CategoryActivity"/>
+        <activity android:name="com.java.zhutianyao.NewsActivity"/>
+        <activity android:name="com.java.zhutianyao.ScholarActivity"/>
+        <activity android:name="com.java.zhutianyao.ClusterActivity"/>
     </application>
 
 </manifest>
