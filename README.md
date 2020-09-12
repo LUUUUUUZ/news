@@ -15,7 +15,7 @@
 
 
 
-![Screenshot_20200911_134747_com.java.zhutianyao](E:\study_resource\sophomore_summer\java\news\pic\Screenshot_20200911_134747_com.java.zhutianyao.jpg)
+![Screenshot_20200911_134747_com.java.zhutianyao](/pic/Screenshot_20200911_134747_com.java.zhutianyao.jpg)
 
 ![Screenshot_20200911_135523_com.java.zhutianyao](E:\study_resource\sophomore_summer\java\news\pic\Screenshot_20200911_135523_com.java.zhutianyao.jpg)
 
